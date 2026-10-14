@@ -79,7 +79,17 @@ Cada tarea tiene **criterios de aceptación**. Se considera terminada cuando tod
 
 - [ ] Crear una abstracción (por ejemplo `IEmailSender`) y una implementación.
   - Para desarrollo basta con una implementación que **escriba el enlace en el log o la consola**, o que use un SMTP local como [Mailpit](https://github.com/axllent/mailpit) o [smtp4dev](https://github.com/rnwood/smtp4dev).
-  - Las credenciales de SMTP van en **User Secrets** o en variables de entorno, nunca en el repositorio.
+  - Las credenciales de SMTP van en **User Secrets**, nunca en `appsettings.json` ni en el repositorio:
+    ```bash
+    cd src/LaboratoryIdentity.Mvc
+    dotnet user-secrets init
+    dotnet user-secrets set "Smtp:Host" "smtp.tu-proveedor.com"
+    dotnet user-secrets set "Smtp:Port" "587"
+    dotnet user-secrets set "Smtp:User" "<usuario>"
+    dotnet user-secrets set "Smtp:Password" "<contraseña-o-app-password>"
+    dotnet user-secrets set "Smtp:From" "no-reply@tu-dominio.com"
+    ```
+  - Leer esa configuración con el patrón Options (por ejemplo una clase `SmtpSettings` registrada con `builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("Smtp"))`).
 - [ ] Registrar el servicio en el contenedor.
 
 **Criterios de aceptación:** el sistema puede "enviar" un correo y el desarrollador puede ver el enlace generado.
@@ -145,7 +155,7 @@ Cada tarea tiene **criterios de aceptación**. Se considera terminada cuando tod
 - [ ] `[HttpPost]` + `[ValidateAntiForgeryToken]` en todos los POST, o un filtro global `AutoValidateAntiforgeryToken`.
 - [ ] Nunca revelar si un correo existe (en el registro, la recuperación y el reenvío de confirmación).
 - [ ] Tokens codificados en Base64Url en las URLs.
-- [ ] Ningún secreto (cadena de conexión, SMTP) dentro del repositorio: usar User Secrets.
+- [ ] Las credenciales de SMTP nunca dentro del repositorio: usar User Secrets.
 - [ ] Logging de los eventos importantes (registro, login fallido, bloqueo, cambio de contraseña).
 
 ---
@@ -169,10 +179,9 @@ Cada tarea tiene **criterios de aceptación**. Se considera terminada cuando tod
 # 1. Restaurar la herramienta de EF Core (está definida en dotnet-tools.json)
 dotnet tool restore
 
-# 2. Configurar la cadena de conexión (recomendado: User Secrets)
+# 2. Ajustar la cadena de conexión "DefaultConnection" a tu PostgreSQL
+#    en src/LaboratoryIdentity.Mvc/appsettings.Development.json
 cd src/LaboratoryIdentity.Mvc
-dotnet user-secrets init
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=LaboratoryIdentity;Username=postgres;Password=<tu-password>"
 
 # 3. Aplicar las migraciones
 dotnet ef database update
