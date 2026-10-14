@@ -1,0 +1,107 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Crear cuenta";
+}
+
+<div class="card auth-card auth-card-lg">
+    <div class="auth-card-header">
+        <div class="auth-icon"><i class="bi bi-person-plus"></i></div>
+        <h1>Crea tu cuenta</h1>
+        <p>Completa tus datos para comenzar</p>
+    </div>
+
+    <div class="auth-card-body">
+        <partial name="_StatusMessage" />
+
+        <form asp-action="Register" method="post" novalidate>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+
+            <h2 class="auth-section-title"><i class="bi bi-person-vcard me-1"></i> Datos personales</h2>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input asp-for="FirstName" class="form-control" placeholder="Nombre" autocomplete="given-name" autofocus />
+                        <label asp-for="FirstName"></label>
+                    </div>
+                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input asp-for="LastName" class="form-control" placeholder="Apellido" autocomplete="family-name" />
+                        <label asp-for="LastName"></label>
+                    </div>
+                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                </div>
+                <div class="col-12">
+                    <div class="form-floating">
+                        <input asp-for="Adress" class="form-control" placeholder="Dirección" autocomplete="street-address" />
+                        <label asp-for="Adress"></label>
+                    </div>
+                    <span asp-validation-for="Adress" class="text-danger small"></span>
+                </div>
+                <div class="col-md-7">
+                    <div class="form-floating">
+                        <input asp-for="Email" class="form-control" placeholder="nombre@correo.com" autocomplete="email" />
+                        <label asp-for="Email"></label>
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-floating">
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="Teléfono" autocomplete="tel" />
+                        <label asp-for="PhoneNumber">Teléfono <span class="text-body-secondary">(opcional)</span></label>
+                    </div>
+                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <h2 class="auth-section-title mt-4"><i class="bi bi-shield-lock me-1"></i> Seguridad</h2>
+
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input asp-for="Password" class="form-control" placeholder="Contraseña" autocomplete="new-password" />
+                            <label asp-for="Password"></label>
+                        </div>
+                        <button type="button" class="btn btn-toggle-password" data-toggle-password="Password" aria-label="Mostrar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="form-floating">
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirmar contraseña" autocomplete="new-password" />
+                            <label asp-for="ConfirmPassword"></label>
+                        </div>
+                        <button type="button" class="btn btn-toggle-password" data-toggle-password="ConfirmPassword" aria-label="Mostrar contraseña">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <p class="form-text mb-4">
+                <i class="bi bi-info-circle me-1"></i>
+                Usa al menos 6 caracteres, combinando mayúsculas, minúsculas, números y símbolos.
+            </p>
+
+            <div class="alert alert-info d-flex align-items-start gap-2 small" role="note">
+                <i class="bi bi-envelope-check mt-1"></i>
+                <div>Te enviaremos un correo para verificar tu cuenta. Deberás confirmarlo antes de poder iniciar sesión.</div>
+            </div>
+
+            <button type="submit" class="btn btn-auth w-100">
+                <i class="bi bi-person-check me-1"></i> Crear cuenta
+            </button>
+        </form>
+    </div>
+
+    <div class="auth-card-footer">
+        ¿Ya tienes una cuenta? <a asp-action="Login" class="auth-link">Inicia sesión</a>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Iniciar sesión";
+}
+
+<div class="card auth-card">
+    <div class="auth-card-header">
+        <div class="auth-icon"><i class="bi bi-person-lock"></i></div>
+        <h1>Bienvenido de nuevo</h1>
+        <p>Ingresa tus credenciales para continuar</p>
+    </div>
+
+    <div class="auth-card-body">
+        <partial name="_StatusMessage" />
+
+        @if (Model.EmailNotConfirmed)
+        {
+            <div class="alert alert-warning d-flex align-items-start gap-2" role="alert">
+                <i class="bi bi-envelope-exclamation-fill mt-1"></i>
+                <div>
+                    <strong>Tu cuenta aún no está verificada.</strong>
+                    Revisa tu bandeja de entrada y confirma tu correo antes de iniciar sesión.
+                    <a asp-action="ResendEmailConfirmation" asp-route-email="@Model.Email" class="alert-link d-block mt-1">
+                        Reenviar correo de confirmación
+                    </a>
+                </div>
+            </div>
+        }
+
+        <form asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" method="post" novalidate>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="form-floating mb-1">
+                <input asp-for="Email" class="form-control" placeholder="nombre@correo.com" autocomplete="username" autofocus />
+                <label asp-for="Email"></label>
+            </div>
+            <span asp-validation-for="Email" class="text-danger small d-block mb-3"></span>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input asp-for="Password" class="form-control" placeholder="Contraseña" autocomplete="current-password" />
+                    <label asp-for="Password"></label>
+                </div>
+                <button type="button" class="btn btn-toggle-password" data-toggle-password="Password" aria-label="Mostrar contraseña">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            <span asp-validation-for="Password" class="text-danger small d-block mb-3"></span>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input asp-for="RememberMe" class="form-check-input" />
+                    <label asp-for="RememberMe" class="form-check-label"></label>
+                </div>
+                <a asp-action="ForgotPassword" class="auth-link small">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="btn btn-auth w-100">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar sesión
+            </button>
+        </form>
+
+        <div class="auth-divider">¿Problemas con tu cuenta?</div>
+
+        <div class="text-center small">
+            <a asp-action="ResendEmailConfirmation" class="auth-link">
+                <i class="bi bi-envelope-arrow-up me-1"></i>Reenviar correo de confirmación
+            </a>
+        </div>
+    </div>
+
+    <div class="auth-card-footer">
+        ¿No tienes una cuenta? <a asp-action="Register" class="auth-link">Regístrate</a>
+    </div>
+</div>

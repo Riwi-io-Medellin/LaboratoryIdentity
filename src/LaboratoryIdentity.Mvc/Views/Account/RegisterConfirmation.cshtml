@@ -1,0 +1,26 @@
+@model RegisterConfirmationViewModel
+@{
+    ViewData["Title"] = "Confirma tu correo";
+}
+
+<div class="card auth-card">
+    <div class="auth-status">
+        <div class="auth-status-icon is-info"><i class="bi bi-envelope-paper-heart"></i></div>
+        <h1>¡Revisa tu correo!</h1>
+        <p class="mb-1">Tu cuenta fue creada correctamente. Te enviamos un enlace de verificación a:</p>
+        @if (!string.IsNullOrWhiteSpace(Model.Email))
+        {
+            <p class="fw-semibold text-body fs-5 mb-3">@Model.Email</p>
+        }
+        <p class="small">Debes confirmar tu correo antes de poder iniciar sesión. Si no lo ves, revisa la carpeta de spam.</p>
+
+        <a asp-action="Login" class="btn btn-auth w-100 mt-3">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Ir a iniciar sesión
+        </a>
+    </div>
+
+    <div class="auth-card-footer">
+        ¿No recibiste el correo?
+        <a asp-action="ResendEmailConfirmation" asp-route-email="@Model.Email" class="auth-link">Reenviar</a>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+@*
+    Muestra un mensaje enviado desde el controlador:
+        TempData["StatusMessage"] = "Texto";
+        TempData["StatusType"]    = "success" | "danger" | "warning" | "info";
+*@
+@{
+    var message = TempData["StatusMessage"] as string;
+    var type = TempData["StatusType"] as string ?? "info";
+    var icon = type switch
+    {
+        "success" => "bi-check-circle-fill",
+        "danger" => "bi-x-circle-fill",
+        "warning" => "bi-exclamation-triangle-fill",
+        _ => "bi-info-circle-fill"
+    };
+}
+
+@if (!string.IsNullOrWhiteSpace(message))
+{
+    <div class="alert alert-@type alert-dismissible fade show d-flex align-items-start gap-2" role="alert">
+        <i class="bi @icon mt-1"></i>
+        <div>@message</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}

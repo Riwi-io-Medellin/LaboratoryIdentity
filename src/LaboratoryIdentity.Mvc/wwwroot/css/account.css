@@ -1,0 +1,201 @@
+/* Estilos de las vistas de autenticación (Account) */
+
+:root {
+  --auth-primary: #1b6ec2;
+  --auth-accent: #6f42c1;
+  --auth-gradient: linear-gradient(135deg, var(--auth-primary) 0%, var(--auth-accent) 100%);
+}
+
+.auth-wrapper {
+  min-height: calc(100vh - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  border: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, .10);
+  animation: auth-fade-in .35s ease-out;
+}
+
+.auth-card.auth-card-lg {
+  max-width: 680px;
+}
+
+.auth-card-header {
+  background: var(--auth-gradient);
+  color: #fff;
+  text-align: center;
+  padding: 2rem 2rem 1.75rem;
+}
+
+.auth-card-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: .25rem;
+}
+
+.auth-card-header p {
+  margin: 0;
+  opacity: .85;
+  font-size: .95rem;
+}
+
+.auth-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: .85rem;
+}
+
+.auth-card-body {
+  padding: 2rem;
+}
+
+.auth-card-footer {
+  background: #f8f9fb;
+  border-top: 1px solid #eef0f4;
+  padding: 1.1rem 2rem;
+  text-align: center;
+  font-size: .95rem;
+}
+
+.auth-card .form-floating > .form-control {
+  border-radius: .65rem;
+}
+
+/* site.css (plantilla) hace visible el placeholder alineado a la derecha dentro de .form-floating,
+   y en columnas angostas choca con la etiqueta. Aquí la etiqueta flotante ya cumple esa función. */
+.auth-card .form-floating > .form-control::placeholder,
+.auth-card .form-floating > .form-control:focus::placeholder {
+  color: transparent;
+}
+
+.auth-card .input-group > .form-floating > .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.auth-card .btn-toggle-password {
+  border-top-right-radius: .65rem;
+  border-bottom-right-radius: .65rem;
+  border-color: var(--bs-border-color);
+  color: var(--bs-secondary-color);
+  background: #fff;
+  min-width: 3rem;
+}
+
+.auth-card .btn-toggle-password:hover {
+  color: var(--auth-primary);
+}
+
+.btn-auth {
+  background: var(--auth-gradient);
+  border: 0;
+  color: #fff;
+  font-weight: 600;
+  padding: .8rem 1rem;
+  border-radius: .65rem;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.btn-auth:hover,
+.btn-auth:focus {
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 .5rem 1rem rgba(27, 110, 194, .3);
+}
+
+.auth-link {
+  color: var(--auth-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  color: var(--bs-secondary-color);
+  font-size: .85rem;
+  margin: 1.5rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.auth-section-title {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+  margin-bottom: .75rem;
+}
+
+/* Pantallas de estado (confirmaciones, errores, bloqueo) */
+.auth-status {
+  text-align: center;
+  padding: 2.5rem 2rem;
+}
+
+.auth-status-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.auth-status-icon.is-success { background: rgba(25, 135, 84, .12); color: #198754; }
+.auth-status-icon.is-info    { background: rgba(27, 110, 194, .12); color: var(--auth-primary); }
+.auth-status-icon.is-warning { background: rgba(255, 193, 7, .18); color: #b78103; }
+.auth-status-icon.is-danger  { background: rgba(220, 53, 69, .12); color: #dc3545; }
+
+.auth-status h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+.auth-status p {
+  color: var(--bs-secondary-color);
+}
+
+.validation-summary-valid {
+  display: none;
+}
+
+@keyframes auth-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 575.98px) {
+  .auth-card-body,
+  .auth-status { padding: 1.5rem 1.25rem; }
+  .auth-card-header { padding: 1.5rem 1.25rem; }
+}
